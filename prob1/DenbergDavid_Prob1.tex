@@ -1,0 +1,51 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{amssymb}
+
+\title{Homework 1: Problem 1}
+\author{David Denberg}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent
+Let 
+\[
+x = \pm (b_0.b_1 b_2...) 2^e
+\]
+and 
+\[
+\mathrm{rd}(x) = \pm (b_0.b_1 b_2...b_{p-1}) 2^e
+\]
+where $b_{p-1} = 1$ if $b_p = 1$. We take the two cases separately. 
+
+\noindent
+Case 1 ($b_p = 0$):
+\begin{align*}
+\frac{|x - \mathrm{rd}(x)|}{|x|} &= \frac{|(b_0.b_1 b_2 ...)_2 \times 2^e - (b_0.b_1 b_2...b_{p-1})_2 \times 2^e|}{|(b_0.b_1 b_2 ...)_2 \times 2^e|} \\
+&= \frac{|(0.b_{p+1} b_{p+2} ...)_2 \times 2^{e-p}|}{|(b_0.b_1 b_2 ...)_2 \times 2^e|} \\
+&= \frac{(0.b_{p+1} b_{p+2} ...)_2}{(b_0.b_1 b_2 ...)_2} \times 2^{-p}
+\end{align*}
+To maximize this quantity, the denominator must be minimized and the numerator, maximized. $b_0$ in the denominator must be 1 as the quantity is normalized so the minimum value in the denominator is 1. If we choose $b_i = 1$ for $i = p+1,p+2,...$ then the numerator must equal:
+\[
+\sum_{i=1}^{\infty} 2^{-i} = 1
+\]
+as it is a geometric series. Then the maximum absolute relative error when $b_p = 0$ is $2^{-p}$.
+
+\noindent
+Case 2 ($b_p = 1$):
+\begin{align*}
+\frac{|x - \mathrm{rd}(x)|}{|x|} &= \frac{|(b_0.b_1 b_2 ...)_2 \times 2^e - (b_0.b_1 b_2...b_{p-2} 1)_2 \times 2^e|}{|(b_0.b_1 b_2 ...)_2 \times 2^e|} \\
+&= \frac{|((b_{p-1} - 1).b_{p} b_{p+1} ...)_2 \times 2^{e-(p-1)}|}{|(b_0.b_1 b_2 ...)_2 \times 2^e|} \\
+&= \frac{|((b_{p-1} - 1).b_{p} b_{p+1} ...)_2|}{(b_0.b_1 b_2 ...)_2} \times 2^{-(p-1)}
+\end{align*}
+To maximize this quantity let $b_{p-1} = 0$ and choose $b_i = 1$ for $i = p,p+1,...$. The numerator must then equal:
+\[
+\sum_{i=0}^{\infty} 2^{-i} = 2
+\]
+The denominator is the same as in Case 1, so the maximum absolute relative error when $b_p = 1$ is $2^{-p}$.
+
+\end{document}
