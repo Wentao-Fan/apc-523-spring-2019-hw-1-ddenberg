@@ -1,0 +1,68 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage[makeroom]{cancel}
+
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\title{Homework 1: Problem 8}
+\author{David Denberg}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noindent
+\textbf{Part A}
+
+The reversed recurrence relation is:
+\[
+y_n = \frac{e - y_{n+1}}{n+1}
+\]
+The first few terms in the map $g_k(y_N) = y_k$ are:
+\begin{align*}
+g_N(y_N) &= y_N
+\\
+g_{N-1}(y_N) &= \frac{e - g_N}{N} = \frac{e - y_N}{N}
+\\
+g_{N-2}(y_N) &= \frac{e - g_{N-1}}{N} = \frac{e(N-1) + y_N}{N (N-1)}
+\\
+g_{N-3}(y_N) &= \frac{e - g_{N-2}}{N} = \frac{e(N-1)^2 + y_N}{N (N-1)(N-2)}
+\end{align*}
+After a few terms we observe that $g_k(y_N)$ is linear in terms of $y_N$. The derivative can be written as:
+\[
+g_k'(y_N) = \frac{(-1)^{N-k}k!}{N!}
+\]
+And the condition number $(\mathrm{cond} \; g_k)(y_N)$ is:
+\[
+(\mathrm{cond} \; g_k)(y_N) = \bigg| \frac{y_N k!}{y_k N!} \bigg|
+\]
+The ratio $y_N / y_k$ is upper bounded by 1 for all $k < N$, so:
+\[
+(\mathrm{cond} \; g_k)(y_N) = \frac{k!}{N!}
+\]
+
+\noindent
+\textbf{Part B}
+
+To achieve a relative error of $\epsilon$ in $y_k$ given a relative error of $\epsilon_{y_N} = 1$ one has to solve the following equation for $N$:
+\begin{align*}
+\epsilon &= (\mathrm{cond} \; g_k)(y_N) \epsilon_{y_N}
+\\
+\epsilon &= \frac{k!}{N!}
+\\
+N! &= \frac{k!}{\epsilon}
+\end{align*}
+N can be determined through trial and error in a while loop.
+
+\noindent
+\textbf{Part C}
+
+For eps = $2^{-53}$ and $k = 20$ the value of N is 32. (Code used: partC.m)
+
+\noindent
+\textbf{Part D}
+
+Using the code in partD.m the value computed using the backwards recurrence relation was 0.1238038307625699..., and the value computed using MATLAB's `integral' function was 0.1238038307625699... . The relative error between the two values is 0.
+
+\end{document}
