@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage[makeroom]{cancel}
+
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\title{Homework 1: Problem 7}
+\author{David Denberg}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noindent
+\textbf{Part A}
+
+Wilkinson's polynomial, with $n = 20$ is: 
+\begin{align*}
+w(x) =\; &x^{20} - 210 x^{19} + 20615 x^{18} - 1256850 x^{17} + 53327946 x^{16} - 1672280820 x^{15} + 
+\\
+&40171771630 x^{14} - 756111184500 x^{13} + 11310276995381 x^{12} - 135585182899530 x^{11} + 
+\\
+&1307535010540395 x^{10} - 10142299865511450 x^9 + 63030812099294896 x^8 - 
+\\
+&311333643161390640 x^7 + 1206647803780373360 x^6 - 3599979517947607200 x^5 +
+\\
+&8037811822645051776 x^4 - 12870931245150988800 x^3 + 13803759753640704000 x^2 - 
+\\
+&8752948036761600000 x + 2432902008176640000
+\end{align*}
+
+\noindent
+\textbf{Part B}
+
+Using MATLAB's `fzero' function with an initial guess of $x = 21$, the closest root it found was: 20.000001304... . Using AMTALB's `roots' function to find all roots the largest root it found was: 20.000244798... . `fzero' gave a better estimate of the root than `roots', however it was still off by $1.304 \cdot 10^{-6}$.
+
+\noindent
+\textbf{Part C}
+
+The largest root changes with delta as follows:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+$\delta$      & Root   \\ \hline
+$10^{-8}$ & $20.6476 + 1.1869i$ \\ \hline
+$10^{-4}$ & $23.1490 + 2.7410i$ \\ \hline
+$10^{-4}$ & $28.4002 + 6.5104i$ \\ \hline
+$10^{-2}$ & $38.4782 + 20.834i$ \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent
+\textbf{Part D}
+
+The roots 16 and 17 change from 16.0411 and 16.9743 to $16.7308 + 2.8127i$ and $16.7308 - 2.8127i$ respectively.
+
+\noindent
+\textbf{Part E}
+
+(i)
+\[
+p(x) = a_0 + ... + a_i x^i + ... + a_{n-1} x^{n+1} + x^n
+\]
+Let a perturbation in $p(x)$ from a perturbation in $a_i$ be defined as:
+\[
+\bar{p}(x) = a_0 + ... + (a_i + \delta a_i) x^i + ... + a_{n-1} x^{n+1} + x^n
+\]
+Then from a perturbation in $x$:
+\begin{align*}
+\bar{p}(x + \delta x) &= a_0 + ... + (a_i + \delta a_i) (x + \delta x)^i + ... + a_{n-1} (x + \delta x)^{n+1} + (x + \delta x)^n
+\\
+&= p(x + \delta x) + \delta  a_i (x + \delta x)^i
+\end{align*}
+After subtracting and dividing by $\delta x$ we get:
+\begin{align*}
+\bigg|\frac{p(x + \delta x) - p(x)}{\delta x}\bigg| &= \bigg| \frac{a_i (x + \delta x)^i}{\delta x} \bigg|
+\\
+\implies |p'(x)| &= \bigg| \frac{a_i x^i}{\delta x} \bigg|
+\end{align*}
+We want to find the condition number $\kappa_i$ in:
+\[
+\bigg|\frac{\delta x}{x} \bigg| = \kappa_i \bigg| \frac{\delta a_i}{a_i} \bigg|
+\]
+After rearranging we get:
+\[
+\kappa_i = \frac{|a_i x^{i-1}|}{|p'(x)|}
+\]
+Thus the condition number at the root $\Omega_k$ is:
+\[
+(\mathrm{cond} \; \Omega_k)(a_i) = \frac{|a_i \Omega_k^{i-1}|}{|p'(\Omega_k)|}
+\]
+And $(\mathrm{cond} \; \Omega_k)(\vec{a})$ is:
+\[
+(\mathrm{cond} \; \Omega_k)(\vec{a}) = \sum_{i=0}^{n-1} \frac{|a_i \Omega_k^{i-1}|}{|p'(\Omega_k)|}
+\]
+
+(ii) The condition numbers for $\Omega_k =$ 14, 16, 17, and 20 are: 5.401185e+13, 3.544043e+13, 1.812241e+13, and 1.378468e+11 respectively.
+
+(iii) Because the condition numbers for the `true' function are so large an algorithm cannot be any better. There would not be any improvement by trying to come up with a clever algorithm without introducing some arbitrarily precise floating point representation of a number.
+
+
+\end{document}
