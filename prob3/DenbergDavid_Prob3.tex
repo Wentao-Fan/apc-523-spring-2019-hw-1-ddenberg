@@ -1,0 +1,71 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{amssymb}
+
+\title{Homework 1: Problem 3}
+\author{David Denberg}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noindent
+\textbf{Part A}
+
+If $x$ is a machine number then using method (i) to calculate $x^n$ results in the following error:
+\begin{align*}
+s_1 = \mathrm{fl}(x \cdot x) &= (x \cdot x)(1 + \epsilon_1) \\
+s_2 = \mathrm{fl}(x \cdot s_1) &= (x \cdot x^2)(1 + \epsilon_1 + \epsilon_2) \\
+s_3 = \mathrm{fl}(x \cdot s_3) &= (x \cdot x^3)(1 + \epsilon_1 + \epsilon_2 + \epsilon_3) \\
+s_n = \mathrm{fl}(x \cdot s_{n-1}) &= (x \cdot x^{n-1})(1 + \epsilon_1 + \epsilon_2 + \epsilon_3 + ... + \epsilon_n) = x^n(1 + \epsilon_{net (i)})
+\end{align*}
+where $|\epsilon_i| \le \mathrm{eps}$ for $i = 1,2,...,n$. The upper bound on the error is: $\epsilon_{net (i)} \le n \cdot \mathrm{eps}$. Using method (ii) to calculate $x^n$ results in the following error:
+\begin{align*}
+\mathrm{fl}(\ln(x)) &= \ln(x)(1 + \epsilon_{log}) \quad |\epsilon_{log}| \le \mathrm{eps}
+\\
+\mathrm{fl}(n \cdot \mathrm{fl}(\ln(x))) &= n \cdot \mathrm{fl}(\ln(x))(1 + \epsilon_{mult}) \approx n \ln(x) (1 + \epsilon_{mult} + \epsilon_{log}) \quad |\epsilon_{mult}| \le \mathrm{eps}
+\\
+\mathrm{fl}(e^{\mathrm{fl}(n \cdot \mathrm{fl}(\ln(x)))}) &= e^{\mathrm{fl}(n \cdot \mathrm{fl}(\ln(x)))} (1 + \epsilon_{exp}) = e^{n \ln(x) (1 + \epsilon_{mult} + \epsilon_{log})}(1 + \epsilon_{exp})
+\\
+&\approx e^{n \ln(x)}(1 + n \ln(x) (\epsilon_{mult} + \epsilon_{log}))(1 + \epsilon_{exp})
+\\
+&\approx e^{n \ln(x)}(1 + n \ln(x) (\epsilon_{mult} + \epsilon_{log}) + \epsilon_{exp}) \quad |\epsilon_{exp}| \le \mathrm{eps}
+\end{align*}
+The upper bound on the total error, $\epsilon_{net(ii)} = n \ln(x) (\epsilon_{mult} + \epsilon_{log}) + \epsilon_{exp}$, is: $\epsilon_{net(ii)} \le (2 n \ln(x) + 1) \cdot \mathrm{eps}$. If $2 n \ln(x) + 1 > n$ then use method (i), otherwise use method (ii).
+
+\noindent
+\textbf{Part B}
+
+(i). First let $\mathrm{fl}(x) = x$ and $\mathrm{fl}(a) = a(1+\epsilon_a)$
+\begin{align*}
+\mathrm{fl}(\ln x) &= \ln x(1 + \epsilon_{log}) \quad |\epsilon_{log}| \le \mathrm{eps}
+\\
+\mathrm{fl}(\mathrm{fl}(a) \cdot \mathrm{fl}(\ln x)) &= a \cdot \mathrm{fl}(\ln x)(1 + \epsilon_{mult}) (1 + \epsilon_a) \approx a \ln x (1 + \epsilon_{mult} + \epsilon_{log} + \epsilon_a) \quad |\epsilon_{mult}| \le \mathrm{eps}
+\\
+\mathrm{fl}(e^{\mathrm{fl}(\mathrm{fl}(a) \cdot \mathrm{fl}(\ln x))}) &= e^{\mathrm{fl}(\mathrm{fl}(a) \cdot \mathrm{fl}(\ln x))} (1 + \epsilon_{exp}) = e^{a \ln x (1 + \epsilon_{mult} + \epsilon_{log} + \epsilon_a)}(1 + \epsilon_{exp})
+\\
+&\approx e^{a \ln(x)}(1 + a \ln x (\epsilon_{mult} + \epsilon_{log} + \epsilon_a))(1 + \epsilon_{exp})
+\\
+&\approx e^{a \ln(x)}(1 + a \ln x (\epsilon_{mult} + \epsilon_{log} + \epsilon_a) + \epsilon_{exp}) \quad |\epsilon_{exp}| \le \mathrm{eps}
+\\
+\epsilon_{total} &= (\epsilon_{mult} + \epsilon_{log} + \epsilon_a) a \ln x + \epsilon_{exp}
+\end{align*}
+(ii). Now if $\mathrm{fl}(x) = x(1 + \epsilon_x)$ and $\mathrm{fl}(a) = a$
+\begin{align*}
+\mathrm{fl}(\ln \mathrm{fl}(x)) &= \ln x(1 + \epsilon_{log} + \epsilon_x) \quad |\epsilon_{log}| \le \mathrm{eps}
+\\
+\mathrm{fl}(a \cdot \mathrm{fl}(\ln \mathrm{fl}(x))) &= a \cdot \mathrm{fl}(\ln \mathrm{fl}(x))(1 + \epsilon_{mult}) \approx a \ln x (1 + \epsilon_{mult} + \epsilon_{log} + \epsilon_x) \quad |\epsilon_{mult}| \le \mathrm{eps}
+\\
+\mathrm{fl}(e^{\mathrm{fl}(a \cdot \mathrm{fl}(\ln \mathrm{fl}(x)))}) &= e^{\mathrm{fl}(a \cdot \mathrm{fl}(\ln \mathrm{fl}(x)))} (1 + \epsilon_{exp}) = e^{a \ln x (1 + \epsilon_{mult} + \epsilon_{log} + \epsilon_x)}(1 + \epsilon_{exp})
+\\
+&\approx e^{a \ln(x)}(1 + a \ln x (\epsilon_{mult} + \epsilon_{log} + \epsilon_x))(1 + \epsilon_{exp})
+\\
+&\approx e^{a \ln(x)}(1 + a \ln x (\epsilon_{mult} + \epsilon_{log} + \epsilon_x) + \epsilon_{exp}) \quad |\epsilon_{exp}| \le \mathrm{eps}
+\\
+\epsilon_{total} &= (\epsilon_{mult} + \epsilon_{log} + \epsilon_x) a \ln x + \epsilon_{exp}
+\end{align*}
+In either case the error is proportional to $a \ln x$ so if $a \ln x$ is large, the error will also be large.
+
+
+\end{document}
