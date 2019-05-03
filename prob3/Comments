@@ -1,0 +1,3 @@
+In part (a), you should have s_{n-1} = x^{n} ( 1 + (n-1)\epsilon ) instead ( just look at your expression for s_{n}, it's not in line with what you see in s_{1}, s_{2}, and s_{3} ).
+In part (a), ln(x) should be substituted by ln(-x) when x < 0.
+In (ii) of part (b), ln(x(1 + \epsilon_{x})) ~ ln(x)( 1 + 1/(ln(x))\epsilon_{x} ), so your first line of derivation is wrong.
