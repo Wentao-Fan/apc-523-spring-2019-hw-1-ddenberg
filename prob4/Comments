@@ -1,0 +1,3 @@
+In part (b), you should keep track of the signs of the errors resulting from each operation, and then find the maximum error possible. You arrived at a wrong result in this part, and this leads to wrong results in the following parts.
+In part (c), if you are plotting 2*exp(x)/x in the interval 0 < x < 1, then you should not find its value below 5.
+In part (d), you should expand to the leading order in \epsilon, assuming that \epsilon is small.
